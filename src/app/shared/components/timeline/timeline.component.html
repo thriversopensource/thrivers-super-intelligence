@@ -1,0 +1,108 @@
+<div class="timeline">
+  <!-- Programme track -->
+  <div class="track" aria-hidden="true">
+    <span class="track__fill" [style.width]="trackFill()"></span>
+  </div>
+
+  <div class="tabs" role="tablist" aria-label="Roadmap years" (keydown)="onTabKeydown($event)">
+    @for (phase of phases(); track phase.id; let i = $index) {
+      <button
+        #tab
+        type="button"
+        role="tab"
+        class="tab"
+        [id]="'tab-' + phase.id"
+        [class.is-selected]="phase.id === selected()"
+        [class.is-past]="i < selectedIndex()"
+        [attr.aria-selected]="phase.id === selected()"
+        [attr.aria-controls]="'panel-' + phase.id"
+        [attr.tabindex]="phase.id === selected() ? 0 : -1"
+        (click)="select(phase.id)"
+      >
+        <span class="tab__node" aria-hidden="true"></span>
+        <span class="tab__year mono">Year {{ phase.year }} · {{ phase.period }}</span>
+        <span class="tab__title">{{ phase.title }}</span>
+      </button>
+    }
+  </div>
+
+  @let phase = current();
+  <div
+    class="phase-panel"
+    role="tabpanel"
+    tabindex="0"
+    [id]="'panel-' + phase.id"
+    [attr.aria-labelledby]="'tab-' + phase.id"
+  >
+    @for (p of [phase]; track p.id) {
+      <div class="phase-panel__body">
+        <header class="phase-panel__head">
+          <p class="phase-panel__kicker mono">
+            <span>Phase {{ p.year }} of {{ phases().length }}</span>
+            <span class="phase-panel__proposed">Proposed targets</span>
+          </p>
+          <h2 class="phase-panel__title">{{ p.title }}</h2>
+          <p class="phase-panel__summary">{{ p.summary }}</p>
+        </header>
+
+        <div class="phase-panel__grid">
+          <section class="col">
+            <h3 class="label mono">Objectives</h3>
+            <ul class="tick-list">
+              @for (item of p.objectives; track item) {
+                <li>{{ item }}</li>
+              }
+            </ul>
+
+            <h3 class="label mono col__gap">Technical learning areas</h3>
+            <ul class="areas">
+              @for (area of p.learningAreas; track area; let i = $index) {
+                <li><span class="mono">{{ p.year }}.{{ i + 1 }}</span>{{ area }}</li>
+              }
+            </ul>
+          </section>
+
+          <section class="col col--milestones">
+            <h3 class="label mono">Research milestones</h3>
+            <div class="milestones">
+              @for (m of p.milestones; track m.id; let i = $index) {
+                <app-milestone [milestone]="m" [index]="i" [year]="p.year" />
+              }
+            </div>
+          </section>
+
+          <section class="col">
+            <h3 class="label mono">Expected deliverables</h3>
+            <ul class="tick-list">
+              @for (item of p.deliverables; track item) {
+                <li>{{ item }}</li>
+              }
+            </ul>
+
+            <h3 class="label mono col__gap">Success criteria</h3>
+            <ol class="criteria">
+              @for (item of p.successCriteria; track item) {
+                <li>{{ item }}</li>
+              }
+            </ol>
+          </section>
+        </div>
+      </div>
+    }
+
+    <nav class="stepper" aria-label="Roadmap phase navigation">
+      @if (previous(); as prev) {
+        <button type="button" class="btn" (click)="step(prev)">
+          <span aria-hidden="true">←</span> Year {{ prev.year }}: {{ prev.title }}
+        </button>
+      } @else {
+        <span></span>
+      }
+      @if (next(); as nxt) {
+        <button type="button" class="btn" (click)="step(nxt)">
+          Year {{ nxt.year }}: {{ nxt.title }} <span class="arrow" aria-hidden="true">→</span>
+        </button>
+      }
+    </nav>
+  </div>
+</div>

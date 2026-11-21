@@ -1,0 +1,145 @@
+<app-hero
+  eyebrow="Join Us"
+  heading="Build the foundations with us."
+  lead="TSI is an emerging, collaborative research initiative. We are looking for people who want to understand language models deeply — and who value rigour, reproducibility and clear documentation."
+>
+  <ng-container heroActions>
+    <a routerLink="/join" fragment="contact" class="btn btn--primary">
+      Get in touch <span class="arrow" aria-hidden="true">→</span>
+    </a>
+    <a routerLink="/roadmap" class="btn">See what we're working towards</a>
+  </ng-container>
+</app-hero>
+
+<!-- Profiles -->
+<section class="section" aria-labelledby="profiles-title">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow">Contributor profiles</p>
+      <h2 id="profiles-title">Who we're looking for.</h2>
+      <p class="lead">Curiosity and care matter more than credentials. These are the profiles we expect to need most.</p>
+    </header>
+    <ul class="profiles">
+      @for (p of profiles; track p.title; let i = $index) {
+        <li class="profile">
+          <span class="profile__index mono">{{ i + 1 < 10 ? '0' + (i + 1) : i + 1 }}</span>
+          <h3>{{ p.title }}</h3>
+          <p>{{ p.focus }}</p>
+          <ul class="chip-list" aria-label="Typical areas">
+            @for (a of p.areas; track a) {
+              <li class="chip">{{ a }}</li>
+            }
+          </ul>
+        </li>
+      }
+    </ul>
+  </div>
+</section>
+
+<!-- Philosophy -->
+<section class="section section--raised" aria-labelledby="contrib-title">
+  <div class="container philosophy">
+    <header class="section-head">
+      <p class="eyebrow">Contribution philosophy</p>
+      <h2 id="contrib-title">How we work together.</h2>
+    </header>
+    <ol class="principles">
+      @for (item of philosophy; track item.title; let i = $index) {
+        <li>
+          <span class="mono">0{{ i + 1 }}</span>
+          <div>
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.body }}</p>
+          </div>
+        </li>
+      }
+    </ol>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="section contact-section" aria-labelledby="contact-title">
+  <div class="container contact">
+    <div class="contact__intro">
+      <p class="eyebrow">Contact</p>
+      <h2 id="contact-title">Introduce yourself.</h2>
+      @if (contactEmail) {
+        <p class="lead">
+          Write to us at <a class="link-arrow" [href]="'mailto:' + contactEmail">{{ contactEmail }}</a>. You
+          can use the builder to structure your introduction.
+        </p>
+      } @else {
+        <p class="lead">
+          Our public contact channel is being finalised and will be published here. In the meantime, use
+          the builder to prepare a structured introduction — copy it and keep it ready to send once the
+          channel opens.
+        </p>
+      }
+      <ul class="tick-list contact__tips">
+        <li>Say which profile best describes you</li>
+        <li>Name a project or research question you care about</li>
+        <li>Link to work you're proud of when you send it</li>
+      </ul>
+    </div>
+
+    <form class="builder" (submit)="$event.preventDefault(); copy()" aria-describedby="builder-help">
+      <p id="builder-help" class="builder__help mono">Introduction builder · nothing is sent or stored</p>
+
+      <div class="field">
+        <label for="f-name">Name <span class="optional">(optional)</span></label>
+        <input id="f-name" type="text" autocomplete="name" [value]="name()" (input)="update(name.set, $event)" />
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="f-profile">Profile</label>
+          <select id="f-profile" [value]="profile()" (change)="update(profile.set, $event)">
+            @for (p of profiles; track p.title) {
+              <option [value]="p.title">{{ p.title }}</option>
+            }
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-project">Project interest</label>
+          <select id="f-project" [value]="project()" (change)="update(project.set, $event)">
+            <option value="Open to any project">Open to any project</option>
+            @for (p of projects; track p.id) {
+              <option [value]="p.name">{{ p.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="f-bg">Background and contribution</label>
+        <textarea
+          id="f-bg"
+          rows="5"
+          aria-describedby="f-bg-hint"
+          [value]="background()"
+          (input)="update(background.set, $event)"
+        ></textarea>
+        <p id="f-bg-hint" class="hint">At least 20 characters.</p>
+      </div>
+
+      <details class="preview">
+        <summary>Preview introduction</summary>
+        <pre>{{ introduction() }}</pre>
+      </details>
+
+      <div class="builder__actions">
+        <button type="submit" class="btn btn--primary" [disabled]="!canCopy()">Copy introduction</button>
+        <p class="builder__status" role="status">
+          @switch (copyState()) {
+            @case ('copied') {
+              <span class="ok">Copied to clipboard.</span>
+            }
+            @case ('failed') {
+              <span class="err">Copy failed — open the preview and copy manually.</span>
+            }
+          }
+        </p>
+      </div>
+    </form>
+  </div>
+</section>

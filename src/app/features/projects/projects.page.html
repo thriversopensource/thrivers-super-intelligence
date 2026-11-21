@@ -1,0 +1,59 @@
+<app-hero
+  eyebrow="Flagship projects"
+  heading="The engineering behind the research."
+  lead="Five projects turn the research agenda into working systems — from a from-scratch GPT implementation to the proposed TSI-Base model. Statuses reflect actual progress and are updated as work lands."
+/>
+
+<section class="section projects-section" aria-labelledby="projects-list-title">
+  <div class="container">
+    <h2 id="projects-list-title" class="visually-hidden">Project list</h2>
+
+    <div class="toolbar">
+      <div class="filters" role="group" aria-label="Filter projects by status">
+        <button
+          type="button"
+          class="filter"
+          [class.is-active]="filter() === 'all'"
+          [attr.aria-pressed]="filter() === 'all'"
+          (click)="filter.set('all')"
+        >
+          All <span class="mono">{{ total }}</span>
+        </button>
+        @for (s of statuses; track s.id) {
+          <button
+            type="button"
+            class="filter"
+            [class.is-active]="filter() === s.id"
+            [attr.aria-pressed]="filter() === s.id"
+            (click)="filter.set(s.id)"
+          >
+            {{ s.label }} <span class="mono">{{ s.count }}</span>
+          </button>
+        }
+      </div>
+      <p class="toolbar__status mono" aria-live="polite">
+        Showing {{ visible().length }} · {{ filterLabel() }}
+      </p>
+    </div>
+
+    @if (visible().length) {
+      <ul class="grid">
+        @for (project of visible(); track project.id) {
+          <li><app-project-card [project]="project" [showDescription]="true" /></li>
+        }
+      </ul>
+    } @else {
+      <div class="empty">
+        <p>No projects currently have the status “{{ filterLabel() }}”.</p>
+        <button type="button" class="btn" (click)="filter.set('all')">Show all projects</button>
+      </div>
+    }
+  </div>
+</section>
+
+<app-cta
+  heading="Contribute to a project."
+  body="Each project is scoped for collaborative development, with documentation and reproducibility built in from the start."
+  [primary]="{ label: 'Join Us', path: '/join' }"
+  [secondary]="{ label: 'See the technology stack', path: '/technology' }"
+/>

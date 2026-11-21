@@ -1,0 +1,121 @@
+.priorities-section {
+  padding-bottom: var(--s-6);
+}
+
+.priorities {
+  display: grid;
+  gap: var(--s-5);
+  padding: var(--s-6);
+  border: 1px solid var(--c-accent-line);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(40rem 16rem at 0% 0%, rgba(86, 212, 255, 0.07), transparent 70%),
+    var(--c-bg-raised);
+
+  @media (min-width: 64rem) {
+    grid-template-columns: 1fr 1.4fr;
+    column-gap: var(--s-8);
+    padding: var(--s-7);
+  }
+}
+
+.priorities__title {
+  margin-top: var(--s-3);
+  font-size: var(--fs-xl);
+}
+
+.priorities__body {
+  color: var(--c-text-muted);
+}
+
+.priorities__list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+
+  @media (min-width: 64rem) {
+    grid-column: 2;
+  }
+}
+
+.priorities__link {
+  display: inline-flex;
+  gap: var(--s-3);
+  align-items: baseline;
+  padding: var(--s-2) var(--s-4);
+  border: 1px solid var(--c-line-strong);
+  border-radius: var(--radius);
+  font-size: var(--fs-sm);
+  transition: border-color var(--t-fast) var(--ease);
+
+  .mono {
+    font-size: var(--fs-xs);
+    color: var(--c-accent);
+  }
+
+  &:hover {
+    border-color: var(--c-accent);
+  }
+}
+
+.layout {
+  display: grid;
+  padding-bottom: var(--s-8);
+
+  @media (min-width: 80rem) {
+    grid-template-columns: 14rem 1fr;
+    gap: var(--s-7);
+  }
+}
+
+.toc {
+  display: none;
+
+  @media (min-width: 80rem) {
+    display: block;
+    position: sticky;
+    top: calc(var(--nav-h) + var(--s-7));
+    align-self: start;
+    padding-top: var(--s-8);
+  }
+
+  ol {
+    list-style: none;
+    display: grid;
+    gap: var(--s-1);
+    border-left: 1px solid var(--c-line);
+  }
+
+  a {
+    display: flex;
+    gap: var(--s-3);
+    padding: var(--s-2) var(--s-4);
+    margin-left: -1px;
+    border-left: 1px solid transparent;
+    font-size: var(--fs-sm);
+    color: var(--c-text-muted);
+    line-height: 1.4;
+    transition:
+      color var(--t-fast) var(--ease),
+      border-color var(--t-fast) var(--ease);
+
+    &:hover {
+      color: var(--c-text);
+      border-left-color: var(--c-accent);
+    }
+  }
+
+  .mono {
+    font-size: var(--fs-xs);
+    color: var(--c-accent);
+  }
+}
+
+.toc__label {
+  margin-bottom: var(--s-3);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-text-dim);
+}

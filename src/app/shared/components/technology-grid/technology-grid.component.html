@@ -1,0 +1,39 @@
+<div class="controls">
+  <div class="filters" role="group" aria-label="Highlight tools by roadmap year">
+    @for (f of filters(); track f.id) {
+      <button
+        type="button"
+        class="filter"
+        [class.is-active]="filter() === f.id"
+        [attr.aria-pressed]="filter() === f.id"
+        (click)="filter.set(f.id)"
+      >
+        {{ f.label }}
+      </button>
+    }
+  </div>
+  <p class="count mono" aria-live="polite">{{ activeCount() }} tools highlighted</p>
+</div>
+
+<ol class="stack" aria-label="Research technology stack, top layer first">
+  @for (cat of categories(); track cat.id; let i = $index) {
+    <li class="layer">
+      <div class="layer__label">
+        <span class="layer__index mono">L{{ categories().length - i }}</span>
+        <div>
+          <h3 class="layer__name">{{ cat.name }}</h3>
+          <p class="layer__desc">{{ cat.description }}</p>
+        </div>
+      </div>
+      <ul class="layer__tools">
+        @for (tech of cat.technologies; track tech.name) {
+          <li class="tool" [class.is-dim]="!isActive(tech.phase)">
+            <span class="tool__name">{{ tech.name }}</span>
+            <span class="tool__role">{{ tech.role }}</span>
+            <span class="tool__phase mono">Central from Y{{ phaseYear().get(tech.phase) }}</span>
+          </li>
+        }
+      </ul>
+    </li>
+  }
+</ol>

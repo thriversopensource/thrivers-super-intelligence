@@ -1,0 +1,67 @@
+@let p = pillar();
+@if (variant() === 'compact') {
+  <article class="card">
+    <header class="card__head">
+      <span class="index mono">{{ p.index }}</span>
+      @if (p.initialPriority) {
+        <span class="priority mono">Initial priority</span>
+      }
+    </header>
+    <h3 class="card__title">{{ p.title }}</h3>
+    <p class="card__summary">{{ p.summary }}</p>
+    <a class="link-arrow card__link" routerLink="/research" [fragment]="p.id">
+      Read the research agenda<span class="visually-hidden">: {{ p.title }}</span>
+      <span aria-hidden="true">→</span>
+    </a>
+  </article>
+} @else {
+  <article class="full" [id]="p.id" [attr.aria-labelledby]="p.id + '-title'">
+    <header class="full__head">
+      <div class="full__index">
+        <span class="index index--lg mono">{{ p.index }}</span>
+        @if (p.initialPriority) {
+          <span class="priority mono">Initial priority</span>
+        }
+      </div>
+      <div class="full__intro">
+        <h2 class="full__title" [id]="p.id + '-title'">{{ p.title }}</h2>
+        <p class="full__summary">{{ p.summary }}</p>
+      </div>
+    </header>
+
+    <div class="full__grid">
+      <section>
+        <h3 class="label mono">Research objectives</h3>
+        <ul class="tick-list">
+          @for (item of p.objectives; track item) {
+            <li>{{ item }}</li>
+          }
+        </ul>
+      </section>
+      <section>
+        <h3 class="label mono">Open questions</h3>
+        <ol class="questions">
+          @for (item of p.questions; track item; let i = $index) {
+            <li><span class="mono">Q{{ i + 1 }}</span>{{ item }}</li>
+          }
+        </ol>
+      </section>
+      <section>
+        <h3 class="label mono">Technologies</h3>
+        <ul class="chip-list">
+          @for (tech of p.technologies; track tech) {
+            <li class="chip">{{ tech }}</li>
+          }
+        </ul>
+      </section>
+      <section>
+        <h3 class="label mono">Potential outcomes</h3>
+        <ul class="tick-list">
+          @for (item of p.outcomes; track item) {
+            <li>{{ item }}</li>
+          }
+        </ul>
+      </section>
+    </div>
+  </article>
+}

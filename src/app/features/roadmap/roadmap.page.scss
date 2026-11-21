@@ -1,0 +1,21 @@
+.roadmap {
+  padding-top: var(--s-7);
+}
+
+.roadmap__notice {
+  margin-bottom: var(--s-8);
+
+  strong {
+    color: var(--c-text);
+  }
+}
+
+.projects {
+  list-style: none;
+  display: grid;
+  gap: var(--s-4);
+
+  @media (min-width: 48rem) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

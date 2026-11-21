@@ -1,0 +1,99 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+/* Whole card is clickable via a stretched link; text stays selectable. */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  height: 100%;
+  padding: var(--s-6) var(--s-5) var(--s-5);
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgba(21, 29, 44, 0.5), rgba(13, 20, 34, 0.3));
+  transition:
+    border-color var(--t-med) var(--ease),
+    transform var(--t-med) var(--ease),
+    background-color var(--t-med) var(--ease);
+
+  &:hover,
+  &:focus-within {
+    border-color: var(--c-accent-line);
+    transform: translateY(-2px);
+  }
+
+  &:focus-within .card__link {
+    outline: none;
+  }
+
+  &:has(.card__link:focus-visible) {
+    outline: 2px solid var(--c-accent);
+    outline-offset: 3px;
+  }
+}
+
+.card--flagship {
+  background:
+    radial-gradient(30rem 14rem at 100% 0%, rgba(76, 125, 255, 0.12), transparent 70%),
+    linear-gradient(180deg, rgba(21, 29, 44, 0.5), rgba(13, 20, 34, 0.3));
+}
+
+.card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin-bottom: var(--s-3);
+}
+
+.card__phase {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--c-text-dim);
+}
+
+.card__name {
+  font-family: var(--f-mono);
+  font-size: var(--fs-lg);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.card__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.card__tagline {
+  font-family: var(--f-display);
+  font-size: var(--fs-md);
+  color: var(--c-text);
+  line-height: 1.4;
+}
+
+.card__desc {
+  font-size: var(--fs-sm);
+  color: var(--c-text-muted);
+}
+
+.card__stack {
+  margin-top: auto;
+  padding-top: var(--s-4);
+}
+
+.card__more {
+  margin-top: var(--s-2);
+  font-size: var(--fs-xs);
+  color: var(--c-accent);
+  opacity: 0.8;
+  transition: opacity var(--t-fast) var(--ease);
+}
+
+.card:hover .card__more {
+  opacity: 1;
+}

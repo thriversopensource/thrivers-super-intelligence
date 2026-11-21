@@ -1,0 +1,71 @@
+<figure class="diagram">
+  <svg viewBox="0 0 440 520" role="img" aria-labelledby="tf-title tf-desc">
+    <title id="tf-title">Decoder-only transformer schematic</title>
+    <desc id="tf-desc">
+      Tokens are embedded with positional information, passed through N stacked blocks of masked
+      multi-head self-attention and feed-forward layers with residual connections, then normalised and
+      projected to a next-token distribution.
+    </desc>
+
+    <!-- Output head -->
+    <rect class="box" x="90" y="44" width="260" height="36" rx="4" />
+    <text class="label" x="220" y="67">Linear · Softmax</text>
+    <rect class="box" x="90" y="104" width="260" height="30" rx="4" />
+    <text class="label label--dim" x="220" y="124">LayerNorm</text>
+
+    <!-- Repeated block -->
+    <rect class="block" x="70" y="160" width="300" height="186" rx="8" />
+    <text class="mono-label" x="40" y="258">× N</text>
+
+    <rect class="box" x="100" y="184" width="240" height="38" rx="4" />
+    <text class="label" x="220" y="207">Feed-Forward (MLP)</text>
+
+    <rect class="box box--accent" x="100" y="272" width="240" height="44" rx="4" />
+    <text class="label label--accent" x="220" y="291">Masked Multi-Head</text>
+    <text class="label label--accent" x="220" y="306">Self-Attention</text>
+
+    <!-- Main path -->
+    <path class="wire" d="M 220 346 L 220 316" />
+    <path class="wire" d="M 220 272 L 220 222" />
+    <path class="wire" d="M 220 184 L 220 160" />
+
+    <!-- Residual connections (add) -->
+    <path class="wire wire--residual" d="M 220 334 L 356 334 L 356 248 L 225 248" />
+    <path class="wire wire--residual" d="M 220 260 L 84 260 L 84 172 L 215 172" />
+    <circle class="node" cx="220" cy="248" r="5" />
+    <path class="plus" d="M 217 248 h 6 M 220 245 v 6" />
+    <circle class="node" cx="220" cy="172" r="5" />
+    <path class="plus" d="M 217 172 h 6 M 220 169 v 6" />
+
+    <!-- Flow -->
+    <path class="wire" d="M 220 160 L 220 134" />
+    <path class="wire" d="M 220 104 L 220 80" />
+    <path class="wire" d="M 220 44 L 220 22" marker-end="url(#tf-arrow)" />
+    <text class="mono-label mono-label--small" x="232" y="20">p(next token)</text>
+
+    <rect class="box" x="90" y="372" width="260" height="36" rx="4" />
+    <text class="label" x="220" y="395">Token + Positional Embedding</text>
+    <path class="wire" d="M 220 372 L 220 346" />
+    <path class="wire" d="M 220 438 L 220 408" />
+
+    <!-- Tokens -->
+    @for (token of tokens; track token.label; let last = $last) {
+      <rect class="token" [class.token--query]="last" [attr.x]="token.x" y="438" width="64" height="36" rx="4" />
+      <text class="token-label" [attr.x]="token.x + 32" y="461">{{ token.label }}</text>
+    }
+
+    <!-- Causal attention from the latest token -->
+    @for (arc of arcs; track arc.id) {
+      <path class="arc" [attr.d]="arc.d" [style.animation-delay]="arc.delay" />
+    }
+
+    <defs>
+      <marker id="tf-arrow" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M 0 0 L 8 4 L 0 8 z" class="arrowhead" />
+      </marker>
+    </defs>
+  </svg>
+  <figcaption class="mono">
+    <span>Fig. 01</span> Decoder-only transformer — the starting architecture for TSI-GPT
+  </figcaption>
+</figure>

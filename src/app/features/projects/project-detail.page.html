@@ -1,0 +1,113 @@
+@if (project(); as p) {
+  <article class="detail">
+    <header class="detail__hero grid-bg">
+      <div class="container detail__hero-inner">
+        <nav class="crumbs mono" aria-label="Breadcrumb">
+          <ol>
+            <li><a routerLink="/projects">Projects</a></li>
+            <li aria-current="page">{{ p.name }}</li>
+          </ol>
+        </nav>
+        <div class="detail__meta">
+          <app-status-badge [status]="p.status" />
+          @if (phase(); as ph) {
+            <a class="detail__phase mono" routerLink="/roadmap" [queryParams]="{ year: ph.year }">
+              Year {{ ph.year }} · {{ ph.period }} · {{ ph.title }}
+            </a>
+          }
+        </div>
+        <h1 class="detail__name">{{ p.name }}</h1>
+        <p class="detail__tagline">{{ p.tagline }}</p>
+      </div>
+    </header>
+
+    <div class="container detail__body">
+      <div class="detail__main">
+        <section aria-labelledby="desc-title">
+          <h2 id="desc-title" class="label mono">Description</h2>
+          <p class="detail__desc">{{ p.description }}</p>
+        </section>
+
+        <section class="objective" aria-labelledby="obj-title">
+          <h2 id="obj-title" class="label mono">Research objective</h2>
+          <p>{{ p.objective }}</p>
+        </section>
+
+        <section aria-labelledby="deliv-title">
+          <h2 id="deliv-title" class="label mono">Expected deliverables</h2>
+          <ol class="deliverables">
+            @for (d of p.deliverables; track d; let i = $index) {
+              <li><span class="mono">D{{ i + 1 }}</span>{{ d }}</li>
+            }
+          </ol>
+        </section>
+      </div>
+
+      <aside class="detail__side" aria-label="Project facts">
+        <dl class="facts">
+          <div>
+            <dt class="mono">Status</dt>
+            <dd><app-status-badge [status]="p.status" /></dd>
+          </div>
+          <div>
+            <dt class="mono">Technical stack</dt>
+            <dd>
+              <ul class="chip-list">
+                @for (t of p.stack; track t) {
+                  <li class="chip">{{ t }}</li>
+                }
+              </ul>
+            </dd>
+          </div>
+          <div>
+            <dt class="mono">Research pillars</dt>
+            <dd>
+              <ul class="pillar-links">
+                @for (pl of pillars(); track pl.id) {
+                  <li>
+                    <a routerLink="/research" [fragment]="pl.id" class="link-arrow">{{ pl.title }}</a>
+                  </li>
+                }
+              </ul>
+            </dd>
+          </div>
+        </dl>
+        <p class="side-note">
+          Status reflects actual progress. No results or performance figures are claimed until they are
+          produced and documented.
+        </p>
+      </aside>
+    </div>
+
+    <nav class="container pager" aria-label="Other projects">
+      @if (previous(); as prev) {
+        <a class="pager__link" [routerLink]="['/projects', prev.id]">
+          <span class="mono">← Previous</span>{{ prev.name }}
+        </a>
+      } @else {
+        <span></span>
+      }
+      @if (next(); as nxt) {
+        <a class="pager__link pager__link--next" [routerLink]="['/projects', nxt.id]">
+          <span class="mono">Next →</span>{{ nxt.name }}
+        </a>
+      }
+    </nav>
+  </article>
+
+  <app-cta
+    [heading]="'Contribute to ' + p.name + '.'"
+    body="Interested in this work? Find out how contributors take part."
+    [primary]="{ label: 'Join Us', path: '/join' }"
+    [secondary]="{ label: 'All projects', path: '/projects' }"
+  />
+} @else {
+  <section class="section">
+    <div class="container missing">
+      <p class="eyebrow">404 · Project</p>
+      <h1>Project not found.</h1>
+      <p class="lead">There is no project with the identifier “{{ id() }}”.</p>
+      <a routerLink="/projects" class="btn btn--primary">View all projects <span class="arrow" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+}

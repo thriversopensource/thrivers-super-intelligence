@@ -1,0 +1,122 @@
+<app-hero
+  variant="home"
+  [eyebrow]="brand.positioning"
+  heading="Building the Foundations of Intelligence."
+  lead="An independent AI research and engineering initiative exploring language models, transformer architectures and the foundations of intelligent systems."
+>
+  <ng-container heroActions>
+    <a routerLink="/research" class="btn btn--primary">
+      Explore Our Research <span class="arrow" aria-hidden="true">→</span>
+    </a>
+    <a routerLink="/roadmap" class="btn">Our Three-Year Roadmap</a>
+  </ng-container>
+  <app-transformer-diagram heroVisual />
+</app-hero>
+
+<!-- Key facts -->
+<section class="facts" aria-label="At a glance">
+  <dl class="container facts__grid">
+    @for (fact of facts; track fact.label) {
+      <div class="fact">
+        <dt class="mono">{{ fact.label }}</dt>
+        <dd>{{ fact.value }}</dd>
+      </div>
+    }
+  </dl>
+</section>
+
+<!-- Mission -->
+<section class="section" aria-labelledby="mission-title">
+  <div class="container mission">
+    <p class="eyebrow">Mission</p>
+    <h2 id="mission-title" class="mission__statement">{{ mission.statement }}</h2>
+    <div class="mission__why">
+      <h3 class="mono">Why TSI exists</h3>
+      <p>{{ mission.why }}</p>
+      <a routerLink="/about" class="link-arrow">About the initiative <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- Pillars -->
+<section class="section section--raised" aria-labelledby="pillars-title">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow">Research pillars</p>
+      <h2 id="pillars-title">Five lines of inquiry, one direction.</h2>
+      <p class="lead">
+        Our agenda spans the full life of a language model — from architecture and data to training,
+        evaluation and application. Transformer architecture and pretraining come first.
+      </p>
+    </header>
+    <ul class="pillars">
+      @for (pillar of pillars; track pillar.id) {
+        <li><app-research-pillar [pillar]="pillar" /></li>
+      }
+    </ul>
+  </div>
+</section>
+
+<!-- Progression -->
+<section class="section" aria-labelledby="progression-title">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow">Research progression</p>
+      <h2 id="progression-title">From applied engineering to foundation models.</h2>
+      <p class="lead">
+        Capability is built in sequence. Each stage produces the understanding and tooling the next one
+        depends on.
+      </p>
+    </header>
+    <app-progression [stages]="progression" />
+  </div>
+</section>
+
+<!-- Three-year vision -->
+<section class="section section--ruled grid-bg vision-section" aria-labelledby="vision-title">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow">Three-year vision · {{ brand.programme }}</p>
+      <h2 id="vision-title">A proposed path to independent pretraining.</h2>
+      <p class="lead">Targets, not achievements — each year is scoped to be concrete and testable.</p>
+    </header>
+    <ol class="vision">
+      @for (phase of roadmap; track phase.id) {
+        <li class="vision__item">
+          <a class="vision__link" routerLink="/roadmap" [queryParams]="{ year: phase.year }">
+            <span class="vision__year mono">Year {{ phase.year }} · {{ phase.period }}</span>
+            <span class="vision__title">{{ phase.title }}</span>
+            <span class="vision__summary">{{ phase.summary }}</span>
+            <span class="vision__more mono">View Year {{ phase.year }} in the roadmap →</span>
+          </a>
+        </li>
+      }
+    </ol>
+  </div>
+</section>
+
+<!-- Projects -->
+<section class="section section--ruled" aria-labelledby="projects-title">
+  <div class="container">
+    <div class="split-head">
+      <header class="section-head">
+        <p class="eyebrow">Flagship projects</p>
+        <h2 id="projects-title">Engineering the research stack.</h2>
+      </header>
+      <a routerLink="/projects" class="link-arrow">All projects <span aria-hidden="true">→</span></a>
+    </div>
+    <ul class="projects">
+      @for (project of projects; track project.id) {
+        <li><app-project-card [project]="project" /></li>
+      }
+    </ul>
+  </div>
+</section>
+
+<app-cta
+  eyebrow="Participate"
+  heading="Help build the foundations."
+  body="TSI is looking for engineers, researchers and mathematically minded contributors who value rigour, reproducibility and open documentation."
+  [primary]="{ label: 'Join the initiative', path: '/join' }"
+  [secondary]="{ label: 'Read the roadmap', path: '/roadmap' }"
+/>

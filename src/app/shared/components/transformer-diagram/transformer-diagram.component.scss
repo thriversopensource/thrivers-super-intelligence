@@ -1,0 +1,151 @@
+:host {
+  display: block;
+}
+
+.diagram {
+  margin: 0;
+  padding: var(--s-5) var(--s-5) var(--s-4);
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgba(13, 20, 34, 0.9), rgba(6, 10, 18, 0.9));
+  box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.8);
+
+  svg {
+    width: 100%;
+    height: auto;
+    max-height: 32rem;
+    margin-inline: auto;
+  }
+}
+
+figcaption {
+  margin-top: var(--s-3);
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--c-line);
+  font-size: 0.72rem;
+  color: var(--c-text-dim);
+
+  span {
+    color: var(--c-accent);
+    margin-right: var(--s-2);
+  }
+}
+
+.box {
+  fill: rgba(21, 29, 44, 0.9);
+  stroke: rgba(148, 170, 205, 0.28);
+}
+
+.box--accent {
+  fill: rgba(86, 212, 255, 0.07);
+  stroke: rgba(86, 212, 255, 0.55);
+}
+
+.block {
+  fill: none;
+  stroke: rgba(148, 170, 205, 0.22);
+  stroke-dasharray: 4 4;
+}
+
+.label,
+.token-label,
+.mono-label {
+  font-family: var(--f-mono);
+  text-anchor: middle;
+}
+
+.label {
+  font-size: 11.5px;
+  fill: #dce3ee;
+}
+
+.label--dim {
+  fill: #a1abbd;
+}
+
+.label--accent {
+  fill: #8be3ff;
+}
+
+.mono-label {
+  font-size: 12px;
+  fill: #56d4ff;
+  text-anchor: start;
+}
+
+.mono-label--small {
+  font-size: 10px;
+  fill: #7f8a9e;
+}
+
+.wire {
+  fill: none;
+  stroke: rgba(148, 170, 205, 0.45);
+  stroke-width: 1;
+}
+
+.wire--residual {
+  stroke: rgba(148, 170, 205, 0.42);
+  stroke-dasharray: 3 3;
+}
+
+.node {
+  fill: #0d1422;
+  stroke: rgba(148, 170, 205, 0.5);
+}
+
+.plus {
+  stroke: #a1abbd;
+  stroke-width: 1;
+}
+
+.arrowhead {
+  fill: rgba(148, 170, 205, 0.6);
+}
+
+.token {
+  fill: rgba(13, 20, 34, 1);
+  stroke: rgba(148, 170, 205, 0.3);
+}
+
+.token--query {
+  stroke: #56d4ff;
+}
+
+.token-label {
+  font-size: 11px;
+  fill: #c9d1de;
+}
+
+.arc {
+  fill: none;
+  stroke: #56d4ff;
+  stroke-width: 1;
+  stroke-opacity: 0.55;
+  stroke-dasharray: 200;
+  stroke-dashoffset: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .arc {
+    animation: attend 4.2s var(--ease) infinite both;
+  }
+}
+
+@keyframes attend {
+  0% {
+    stroke-dashoffset: 200;
+    stroke-opacity: 0;
+  }
+  25% {
+    stroke-opacity: 0.7;
+  }
+  55% {
+    stroke-dashoffset: 0;
+    stroke-opacity: 0.55;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    stroke-opacity: 0;
+  }
+}

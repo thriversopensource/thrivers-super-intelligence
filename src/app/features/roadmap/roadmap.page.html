@@ -1,0 +1,43 @@
+<app-hero
+  eyebrow="Roadmap · 2026–2029"
+  heading="A three-year path to independent model development."
+  lead="Three phases, each building on the last: foundations, research and engineering, and independent pretraining of TSI-Base. Select a year to explore its objectives, milestones, deliverables and success criteria."
+/>
+
+<section class="section roadmap" aria-label="Interactive research timeline">
+  <div class="container">
+    <div class="notice roadmap__notice">
+      <span class="notice__label">Note</span>
+      <p>
+        These are <strong>proposed targets</strong>, not completed achievements or guaranteed outcomes.
+        Timelines and scope will be revised as research progresses. Use the arrow keys to move between
+        years.
+      </p>
+    </div>
+
+    <app-timeline [phases]="phases" [selected]="selected()" (selectedChange)="onSelect($event)" />
+  </div>
+</section>
+
+@if (phaseProjects().length) {
+  <section class="section section--raised" aria-labelledby="phase-projects-title">
+    <div class="container">
+      <header class="section-head">
+        <p class="eyebrow">Projects in this phase</p>
+        <h2 id="phase-projects-title">What gets built.</h2>
+      </header>
+      <ul class="projects">
+        @for (project of phaseProjects(); track project.id) {
+          <li><app-project-card [project]="project" [showDescription]="true" /></li>
+        }
+      </ul>
+    </div>
+  </section>
+}
+
+<app-cta
+  heading="Want to help us hit these milestones?"
+  body="We welcome contributors who want to learn, experiment and document alongside us."
+  [primary]="{ label: 'Join Us', path: '/join' }"
+  [secondary]="{ label: 'Browse all projects', path: '/projects' }"
+/>

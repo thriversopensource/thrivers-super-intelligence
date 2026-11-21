@@ -1,0 +1,228 @@
+:host {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: block;
+}
+
+.nav {
+  position: relative;
+  border-bottom: 1px solid transparent;
+  background: rgba(6, 10, 18, 0.6);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  transition:
+    border-color var(--t-med) var(--ease),
+    background-color var(--t-med) var(--ease);
+}
+
+:host(.is-scrolled) .nav,
+:host(.is-open) .nav {
+  border-bottom-color: var(--c-line);
+  background: rgba(6, 10, 18, 0.88);
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  height: var(--nav-h);
+}
+
+.nav__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-right: auto;
+}
+
+.nav__wordmark {
+  display: grid;
+  line-height: 1.15;
+}
+
+.nav__name {
+  font-family: var(--f-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.005em;
+
+  em {
+    font-style: italic;
+    color: var(--c-text-muted);
+  }
+}
+
+.nav__sub {
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  color: var(--c-text-dim);
+}
+
+.nav__links ul {
+  display: flex;
+  gap: var(--s-1);
+  list-style: none;
+}
+
+.nav__link {
+  position: relative;
+  display: block;
+  padding: var(--s-2) var(--s-3);
+  font-size: var(--fs-sm);
+  color: var(--c-text-muted);
+  transition: color var(--t-fast) var(--ease);
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: var(--s-3);
+    right: var(--s-3);
+    bottom: -2px;
+    height: 1px;
+    background: var(--c-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--t-med) var(--ease);
+  }
+
+  &:hover {
+    color: var(--c-text);
+  }
+
+  &.is-active {
+    color: var(--c-text);
+
+    &::after {
+      transform: scaleX(1);
+    }
+  }
+}
+
+.nav__cta {
+  min-height: 2.4rem;
+  padding: 0.45rem 1rem;
+
+  &.is-active {
+    border-color: var(--c-accent-line);
+    color: var(--c-accent);
+  }
+}
+
+.nav__toggle {
+  display: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--c-line-strong);
+  border-radius: var(--radius);
+  background: transparent;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav__toggle-bars {
+  display: grid;
+  gap: 6px;
+  width: 18px;
+
+  span {
+    display: block;
+    height: 1.5px;
+    background: var(--c-text);
+    transition: transform var(--t-med) var(--ease);
+  }
+}
+
+:host(.is-open) .nav__toggle-bars span:first-child {
+  transform: translateY(3.75px) rotate(45deg);
+}
+
+:host(.is-open) .nav__toggle-bars span:last-child {
+  transform: translateY(-3.75px) rotate(-45deg);
+}
+
+/* ---------- Drawer ---------- */
+
+.drawer {
+  display: none;
+}
+
+@media (max-width: 63.99rem) {
+  .nav__links,
+  .nav__cta {
+    display: none;
+  }
+
+  .nav__toggle {
+    display: inline-flex;
+  }
+
+  .drawer {
+    display: block;
+    position: fixed;
+    inset: var(--nav-h) 0 0;
+    background: var(--c-bg);
+    border-top: 1px solid var(--c-line);
+    overflow-y: auto;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition:
+      opacity var(--t-med) var(--ease),
+      transform var(--t-med) var(--ease),
+      visibility 0s linear var(--t-med);
+
+    &.is-open {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      transition:
+        opacity var(--t-med) var(--ease),
+        transform var(--t-med) var(--ease);
+    }
+  }
+}
+
+.drawer__inner {
+  display: grid;
+  gap: var(--s-6);
+  padding-block: var(--s-6) var(--s-8);
+}
+
+.drawer__list {
+  list-style: none;
+}
+
+.drawer__link {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-4);
+  padding: var(--s-4) 0;
+  border-bottom: 1px solid var(--c-line);
+  font-family: var(--f-display);
+  font-size: var(--fs-xl);
+  color: var(--c-text-muted);
+
+  .mono {
+    font-size: var(--fs-xs);
+    color: var(--c-text-dim);
+  }
+
+  &.is-active {
+    color: var(--c-text);
+
+    .mono {
+      color: var(--c-accent);
+    }
+  }
+}
+
+.drawer__cta {
+  justify-self: start;
+}
+
+.drawer__note {
+  font-size: var(--fs-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-text-dim);
+}

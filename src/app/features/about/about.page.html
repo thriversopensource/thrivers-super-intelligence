@@ -1,0 +1,137 @@
+<app-hero
+  eyebrow="About TSI"
+  heading="An independent initiative studying intelligence from the inside."
+  lead="Thrivers Super Intelligence is an emerging AI research and engineering initiative. Our long-term aim is to build the scientific, technical and organisational capability to research, architect and train our own large language models."
+/>
+
+<!-- Introduction -->
+<section class="section" aria-labelledby="intro-title">
+  <div class="container intro">
+    <div>
+      <p class="eyebrow">The organisation</p>
+      <h2 id="intro-title" class="intro__title">Research first. Engineering always.</h2>
+    </div>
+    <div class="prose">
+      <p>
+        TSI began from a simple observation: the models reshaping software are understood in depth by very
+        few teams. Most organisations interact with them through APIs, with little visibility into how
+        architecture, data and training decisions determine what a model can do.
+      </p>
+      <p>
+        We are taking the long route. Over the <strong>{{ brand.programme }}</strong> programme, TSI will
+        progress from implementing transformers from first principles, through controlled architecture
+        research and dataset engineering, to the <strong>independent pretraining</strong> of a base model.
+      </p>
+      <p>
+        Every stage is documented, reproducible and shared, so that the knowledge we build is durable and
+        can be examined by others.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Mission & vision -->
+<section class="section section--raised" aria-label="Mission and vision">
+  <div class="container mv">
+    <article class="mv__item">
+      <p class="eyebrow">Mission</p>
+      <p class="mv__text">{{ mission.statement }}</p>
+    </article>
+    <article class="mv__item">
+      <p class="eyebrow">Vision</p>
+      <p class="mv__text">{{ brand.vision }} A future in which foundation-model research is understood, reproducible and accessible beyond a handful of institutions.</p>
+    </article>
+  </div>
+</section>
+
+<!-- Philosophy -->
+<section class="section" aria-labelledby="philosophy-title">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow">Research philosophy</p>
+      <h2 id="philosophy-title">How we approach the work.</h2>
+    </header>
+    <ol class="philosophy">
+      @for (item of philosophy; track item.title; let i = $index) {
+        <li>
+          <span class="philosophy__index mono">0{{ i + 1 }}</span>
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.body }}</p>
+        </li>
+      }
+    </ol>
+  </div>
+</section>
+
+<!-- Principles -->
+<section class="section section--ruled" aria-labelledby="principles-title">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow">Core principles</p>
+      <h2 id="principles-title">Commitments that govern every project.</h2>
+    </header>
+    <dl class="principles">
+      @for (p of principles; track p.title) {
+        <div class="principle">
+          <dt>{{ p.title }}</dt>
+          <dd>{{ p.body }}</dd>
+        </div>
+      }
+    </dl>
+  </div>
+</section>
+
+<!-- Capability vs ambition -->
+<section class="section section--raised" aria-labelledby="capability-title">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow">Current capability · Long-term ambition</p>
+      <h2 id="capability-title">Where we are, and where we intend to go.</h2>
+      <p class="lead">
+        We draw a clear line between what TSI does today and what it is working towards. Nothing in the
+        right-hand column has been achieved yet.
+      </p>
+    </header>
+
+    <div class="table-wrap" role="region" aria-labelledby="capability-title" tabindex="0">
+      <table class="cap-table">
+        <thead>
+          <tr>
+            <th scope="col">Area</th>
+            <th scope="col"><span class="tag tag--now">Today</span></th>
+            <th scope="col"><span class="tag tag--future">Long-term ambition</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of capabilities; track row.area) {
+            <tr>
+              <th scope="row">{{ row.area }}</th>
+              <td>{{ row.today }}</td>
+              <td>{{ row.ambition }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Long-term ambition -->
+<section class="section" aria-labelledby="ambition-title">
+  <div class="container container--narrow ambition">
+    <p class="eyebrow">Long-term ambition</p>
+    <h2 id="ambition-title">Independent foundation-model research.</h2>
+    <p class="lead">
+      Beyond 2029, TSI aims to operate as a research laboratory capable of designing and training
+      foundation models independently — and of contributing findings, tools and documentation back to the
+      wider research community. It is a long horizon, approached one verifiable step at a time.
+    </p>
+  </div>
+</section>
+
+<app-cta
+  heading="See how the plan unfolds."
+  body="The three-year roadmap sets out objectives, milestones and success criteria for each phase."
+  [primary]="{ label: 'View the roadmap', path: '/roadmap' }"
+  [secondary]="{ label: 'Explore research pillars', path: '/research' }"
+/>
